@@ -1,0 +1,226 @@
+@import "tailwindcss";
+
+:root {
+  --cream: #f7f5f0;
+  --ink: #10201a;
+  --muted: #5b6b62;
+  --forest: #0f3d2e;
+  --pine: #1d5c47;
+  --mint: #dceae2;
+  --line: #e4e1d8;
+  --gold: #c9a96a;
+  --nav-height: 3.5rem;
+  --nav-offset: var(--nav-height);
+  --marquee-height: 2.75rem;
+  --tilt-x: 0deg;
+  --tilt-y: 0deg;
+}
+
+@theme inline {
+  --color-cream: var(--cream);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-forest: var(--forest);
+  --color-pine: var(--pine);
+  --color-mint: var(--mint);
+  --color-line: var(--line);
+  --color-gold: var(--gold);
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --font-display: var(--font-instrument-serif), ui-serif, Georgia, serif;
+  --font-mono: var(--font-ibm-plex-mono), ui-monospace, monospace;
+  --radius-card: 1rem;
+  --radius-hero: 1.5rem;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: clip;
+}
+
+html,
+body {
+  width: 100%;
+  max-width: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--font-inter), system-ui, sans-serif;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--mint) 75%, white);
+  color: var(--ink);
+}
+
+.font-display {
+  font-family: var(--font-instrument-serif), ui-serif, Georgia, serif;
+}
+
+.font-mono {
+  font-family: var(--font-ibm-plex-mono), ui-monospace, monospace;
+}
+
+.font-sans {
+  font-family: var(--font-inter), system-ui, sans-serif;
+}
+
+@media (min-width: 768px) {
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--cream);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: color-mix(in srgb, var(--muted) 35%, var(--line));
+    border-radius: 999px;
+    border: 2px solid var(--cream);
+  }
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--forest);
+  outline-offset: 2px;
+}
+
+.section-anchor {
+  scroll-margin-top: calc(var(--nav-offset) + 0.5rem);
+}
+
+.hero-stage {
+  perspective: 1400px;
+  perspective-origin: 50% 42%;
+  overflow-x: clip;
+  max-width: 100%;
+}
+
+.hero-scene {
+  position: relative;
+  transform-style: preserve-3d;
+  transform: rotateX(calc(8deg + var(--tilt-x))) rotateY(calc(-12deg + var(--tilt-y)));
+  transition: transform 0.45s ease-out;
+}
+
+.hero-scene-layer:nth-child(1) {
+  transform: translateZ(-80px) rotateY(10deg) scale(0.94);
+}
+
+.hero-scene-layer:nth-child(2) {
+  transform: translateZ(-36px) rotateY(4deg) scale(0.98);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-scene {
+    transform: none;
+    transition: none;
+  }
+
+  .hero-scene-layer:nth-child(1),
+  .hero-scene-layer:nth-child(2) {
+    transform: none;
+  }
+}
+
+.dot-grid {
+  background-image: radial-gradient(
+    circle at 1px 1px,
+    color-mix(in srgb, var(--ink) 8%, transparent) 1px,
+    transparent 0
+  );
+  background-size: 24px 24px;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee-track {
+  animation: marquee 30s linear infinite;
+}
+
+.marquee-wrap:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+
+  .hero-float {
+    animation: none !important;
+  }
+
+  .motion-safe-hover {
+    transform: none !important;
+  }
+}
+
+@keyframes hero-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.hero-float {
+  animation: hero-float 5s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.15);
+  }
+}
+
+.pulse-dot {
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pulse-dot {
+    animation: none;
+  }
+}
+
+.accordion-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.35s ease-out;
+}
+
+.accordion-panel[data-open="true"] {
+  grid-template-rows: 1fr;
+}
+
+.accordion-panel-inner {
+  overflow: hidden;
+}
